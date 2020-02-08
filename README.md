@@ -1,6 +1,8 @@
 # Monstercat API
 
-Go-based API to access Monstercat releases and tracks.
+[![GoDoc](https://img.shields.io/static/v1?label=godoc&message=reference&color=blue)](https://pkg.go.dev/github.com/menzerath/monstercat-api/monstercat?tab=doc)
+
+Go-based wrapper to access Monstercat's API for releases and tracks.
 
 ## Supported Features
 
@@ -21,9 +23,20 @@ go get -u github.com/menzerath/monstercat-api
 ```go
 package main
 
-import "github.com/menzerath/monstercat-api/monstercat"
+import (
+	"fmt"
+	"os"
+
+	"github.com/menzerath/monstercat-api/monstercat"
+)
 
 func main() {
-    client := monstercat.NewClient()
+	client := monstercat.NewClient()
+	releases, err := client.ReleaseList()
+	if err != nil {
+		fmt.Printf("error: %s", err)
+		os.Exit(1)
+	}
+	fmt.Printf("releases: %+v", releases)
 }
 ```
