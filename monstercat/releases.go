@@ -2,8 +2,9 @@ package monstercat
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -44,28 +45,38 @@ const (
 	ReleaseDownloadFormatWAV  = "wav"
 )
 
-// DownloadRelease downloads the given release as ZIP file in the requested format and returns the retrieved file
-func (client Client) DownloadRelease(release Release, downloadFormat DownloadFormat) ([]byte, error) {
+// DownloadRelease downloads the given release as ZIP file in the requested format and stores it at the given path
+func (client Client) DownloadRelease(release Release, downloadFormat DownloadFormat, downloadPath string) error {
 	if !client.IsLoggedIn() {
-		return nil, ErrorClientNotLoggedIn
+		return ErrorClientNotLoggedIn
 	}
 
 	request, err := http.NewRequest("GET", fmt.Sprintf(endpointReleaseDownload, release.ID, downloadFormat), http.NoBody)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, client.authenticationCookie))
 
 	httpClient := &http.Client{}
 	response, err := httpClient.Do(request)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("http status %d", response.StatusCode)
+		return fmt.Errorf("http status %d", response.StatusCode)
 	}
 
-	return ioutil.ReadAll(response.Body)
+	// create and save file
+	targetFile, err := os.Create(downloadPath)
+	if err != nil {
+		return err
+	}
+	_, err = io.Copy(targetFile, response.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -17,3 +17,13 @@ For additional features open an issue or feel free to create a pull request.
 ```bash
 go get -u github.com/menzerath/monstercat-api
 ```
+
+```go
+package main
+
+import "github.com/menzerath/monstercat-api/monstercat"
+
+func main() {
+    client := monstercat.NewClient()
+}
+```
