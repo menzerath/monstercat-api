@@ -12,6 +12,7 @@ const endpointReleaseDownload = "https://connect.monstercat.com/v2/release/%s/do
 // ReleaseType describes what kind of release we are looking at
 type ReleaseType string
 
+// define all known release types
 const (
 	ReleaseTypeSingle  ReleaseType = "Single"
 	ReleaseTypeAlbum   ReleaseType = "Album"
@@ -38,9 +39,11 @@ type Release struct {
 // DownloadFormat describes in what kind of formats we can download a release
 type DownloadFormat string
 
+// define all known download formats
 const (
 	ReleaseDownloadFormatFlac = "flac"
 	ReleaseDownloadFormatMP3  = "mp3_320"
+	ReleaseDownloadFormatWAV  = "wav"
 )
 
 // Download downloads the current release as ZIP file in the given format and returns the retrieved file
