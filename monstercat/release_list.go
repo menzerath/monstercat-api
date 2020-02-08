@@ -3,6 +3,7 @@ package monstercat
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
 const endpointReleaseList = "https://connect.monstercat.com/v2/releases"
@@ -24,7 +25,7 @@ func GetReleaseList() (ReleaseList, error) {
 func GetReleaseListAtPosition(limit int, offset int) (ReleaseList, error) {
 	releaseList := ReleaseList{}
 
-	response, err := getHTTPClient().Get(fmt.Sprintf("%s?limit=%d&skip=%d", endpointReleaseList, limit, offset))
+	response, err := http.Get(fmt.Sprintf("%s?limit=%d&skip=%d", endpointReleaseList, limit, offset))
 	if err != nil {
 		return releaseList, err
 	}

@@ -26,13 +26,7 @@ func Login(email string, password string) (string, error) {
 		return "", err
 	}
 
-	request, err := http.NewRequest(http.MethodPost, endpointLogin, bytes.NewBuffer(payload))
-	if err != nil {
-		return "", err
-	}
-	request.Header.Set("Content-Type", "application/json")
-
-	response, err := getHTTPClient().Do(request)
+	response, err := http.Post(endpointLogin, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
 		return "", err
 	}

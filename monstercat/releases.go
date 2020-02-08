@@ -54,7 +54,8 @@ func (release Release) Download(authenticationCookie string, downloadFormat Down
 	}
 	request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, authenticationCookie))
 
-	response, err := getHTTPClient().Do(request)
+	httpClient := &http.Client{}
+	response, err := httpClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
