@@ -6,8 +6,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestRelease_Download(t *testing.T) {
-	data, err := Release{}.Download("", ReleaseDownloadFormatMP3)
+func Test_DownloadRelease(t *testing.T) {
+	client := NewClient()
+
+	data, err := client.DownloadRelease(Release{}, ReleaseDownloadFormatMP3)
 	assert.Error(t, err)
+	assert.Equal(t, ErrorClientNotLoggedIn, err)
 	assert.Empty(t, data)
 }

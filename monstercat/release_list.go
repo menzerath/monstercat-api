@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-const endpointReleaseList = "https://connect.monstercat.com/v2/releases"
-
 // ReleaseList represents a list of releases from Monstercat API
 type ReleaseList struct {
 	Results []Release `json:"results"`
@@ -16,18 +14,30 @@ type ReleaseList struct {
 	Skip    int       `json:"skip"`
 }
 
-// GetReleaseList returns the first batch of entries in the current release list (max. limit of 50 entries)
-func GetReleaseList() (ReleaseList, error) {
-	return GetReleaseListAtPosition(50, 0)
+// ReleaseList returns the first batch of entries in the current release list (max. limit of 50 entries)
+func (client Client) ReleaseList() (ReleaseList, error) {
+	return client.ReleaseListAtPosition(50, 0)
 }
 
-// GetReleaseListAtPosition returns the requested batch of entries in the current release list
-func GetReleaseListAtPosition(limit int, offset int) (ReleaseList, error) {
+// ReleaseListAtPosition returns the requested batch of entries in the current release list
+func (client Client) ReleaseListAtPosition(limit int, offset int) (ReleaseList, error) {
 	releaseList := ReleaseList{}
 
-	response, err := http.Get(fmt.Sprintf("%s?limit=%d&skip=%d", endpointReleaseList, limit, offset))
+	request, err := http.NewRequest("GET", fmt.Sprintf("%s?limit=%d&skip=%d", endpointReleaseList, limit, offset), http.NoBody)
 	if err != nil {
 		return releaseList, err
+	}
+	request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, client.authenticationCookie))
+
+	httpClient := &http.Client{}
+	response, err := httpClient.Do(request)
+	if err != nil {
+		return releaseList, err
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return releaseList, fmt.Errorf("http status %d", response.StatusCode)
 	}
 
 	err = json.NewDecoder(response.Body).Decode(&releaseList)
@@ -41,16 +51,4 @@ func GetReleaseListAtPosition(limit int, offset int) (ReleaseList, error) {
 // HasNextPage returns true if the release list contains more pages, false otherwise
 func (releaseList ReleaseList) HasNextPage() bool {
 	return (releaseList.Skip + releaseList.Limit) < releaseList.Total
-}
-
-// LoadNextPage loads the next batch of releases into the calling struct
-func (releaseList *ReleaseList) LoadNextPage() error {
-	newReleaseList, err := GetReleaseListAtPosition(releaseList.Limit, releaseList.Skip+releaseList.Limit)
-	if err != nil {
-		return err
-	}
-
-	releaseList.Results = newReleaseList.Results
-	releaseList.Skip = newReleaseList.Skip
-	return nil
 }

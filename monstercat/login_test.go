@@ -7,8 +7,12 @@ import (
 )
 
 func TestLogin(t *testing.T) {
-	cookie, err := Login("fake@user.com", "test123")
+	client := NewClient()
+
+	err := client.Login("fake@user.com", "test123")
 	assert.Error(t, err)
 	assert.Equal(t, ErrorInvalidCredentials, err)
-	assert.Empty(t, cookie)
+
+	assert.Empty(t, client.authenticationCookie)
+	assert.False(t, client.IsLoggedIn())
 }

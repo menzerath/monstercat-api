@@ -7,39 +7,31 @@ import (
 	"net/http"
 )
 
-const (
-	endpointLogin = "https://connect.monstercat.com/v2/signin"
-
-	authenticationCookieName = "connect.sid"
-)
-
-// ErrorInvalidCredentials is returned when a login fails because of invalid credentials supplied by the user
-var ErrorInvalidCredentials = fmt.Errorf("invalid credentials")
-
-// Login performs a login request into your Monstercat account and returns the created authentication cookie on success
-func Login(email string, password string) (string, error) {
+// Login performs a login request into your Monstercat account and stores the created authentication cookie on success for further requests
+func (client *Client) Login(email string, password string) error {
 	payload, err := json.Marshal(map[string]string{
 		"email":    email,
 		"password": password,
 	})
 	if err != nil {
-		return "", err
+		return err
 	}
 
 	response, err := http.Post(endpointLogin, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
-		return "", err
+		return err
 	}
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusNoContent {
-		return "", ErrorInvalidCredentials
+		return ErrorInvalidCredentials
 	}
 
 	for _, cookie := range response.Cookies() {
 		if cookie.Name == authenticationCookieName {
-			return cookie.Value, nil
+			client.authenticationCookie = cookie.Value
+			return nil
 		}
 	}
-	return "", fmt.Errorf("cookie not found")
+	return fmt.Errorf("cookie not found")
 }

@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-const endpointReleaseDownload = "https://connect.monstercat.com/v2/release/%s/download?format=%s"
-
 // ReleaseType describes what kind of release we are looking at
 type ReleaseType string
 
@@ -46,13 +44,17 @@ const (
 	ReleaseDownloadFormatWAV  = "wav"
 )
 
-// Download downloads the current release as ZIP file in the given format and returns the retrieved file
-func (release Release) Download(authenticationCookie string, downloadFormat DownloadFormat) ([]byte, error) {
+// DownloadRelease downloads the given release as ZIP file in the requested format and returns the retrieved file
+func (client Client) DownloadRelease(release Release, downloadFormat DownloadFormat) ([]byte, error) {
+	if !client.IsLoggedIn() {
+		return nil, ErrorClientNotLoggedIn
+	}
+
 	request, err := http.NewRequest("GET", fmt.Sprintf(endpointReleaseDownload, release.ID, downloadFormat), http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, authenticationCookie))
+	request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, client.authenticationCookie))
 
 	httpClient := &http.Client{}
 	response, err := httpClient.Do(request)
@@ -61,8 +63,7 @@ func (release Release) Download(authenticationCookie string, downloadFormat Down
 	}
 	defer response.Body.Close()
 
-	// check for correct status code
-	if response.StatusCode != 200 {
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("http status %d", response.StatusCode)
 	}
 
