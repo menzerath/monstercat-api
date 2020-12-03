@@ -7,7 +7,7 @@ const (
 	endpointReleaseList     = "https://connect.monstercat.com/v2/releases"
 	endpointReleaseDownload = "https://connect.monstercat.com/v2/release/%s/download?format=%s"
 
-	authenticationCookieName = "connect.sid"
+	authenticationCookieName = "cid"
 )
 
 var (
