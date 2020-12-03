@@ -13,10 +13,12 @@ type ReleaseType string
 
 // define all known release types
 const (
-	ReleaseTypeSingle  ReleaseType = "Single"
-	ReleaseTypeAlbum   ReleaseType = "Album"
-	ReleaseTypePodcast ReleaseType = "Podcast"
-	ReleaseTypeEP      ReleaseType = "EP"
+	ReleaseTypeAlbum       ReleaseType = "Album"
+	ReleaseTypeCompilation ReleaseType = "Compilation"
+	ReleaseTypeEP          ReleaseType = "EP"
+	ReleaseTypeMixes       ReleaseType = "Mixes"
+	ReleaseTypePodcast     ReleaseType = "Podcast"
+	ReleaseTypeSingle      ReleaseType = "Single"
 )
 
 // Release represents a single release from Monstercat API
@@ -31,8 +33,9 @@ type Release struct {
 	GenrePrimary   string `json:"genrePrimary"`
 	GenreSecondary string `json:"genreSecondary"`
 
-	Downloadable bool `json:"downloadable"`
-	Streamable   bool `json:"streamable"`
+	Downloadable  bool `json:"downloadable"`
+	InEarlyAccess bool `json:"inEarlyAccess"`
+	Streamable    bool `json:"streamable"`
 }
 
 // DownloadFormat describes in what kind of formats we can download a release
