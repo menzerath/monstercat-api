@@ -3,6 +3,7 @@ package monstercat
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
@@ -68,7 +69,11 @@ func (client Client) DownloadRelease(release Release, downloadFormat DownloadFor
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		return fmt.Errorf("http status %d", response.StatusCode)
+		message, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("http error %d", response.StatusCode)
+		}
+		return fmt.Errorf("http error %d: %s", response.StatusCode, message)
 	}
 
 	// create and save file
