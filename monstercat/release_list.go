@@ -3,7 +3,7 @@ package monstercat
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -40,7 +40,7 @@ func (client Client) ReleaseListAtPosition(limit int, offset int) (ReleaseList, 
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		message, err := ioutil.ReadAll(response.Body)
+		message, err := io.ReadAll(response.Body)
 		if err != nil {
 			return releaseList, fmt.Errorf("http error %d", response.StatusCode)
 		}
