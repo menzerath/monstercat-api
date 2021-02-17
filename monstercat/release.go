@@ -59,7 +59,9 @@ func (client Client) DownloadRelease(release Release, downloadFormat DownloadFor
 	if err != nil {
 		return err
 	}
-	request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, client.authenticationCookie))
+	if client.IsLoggedIn() {
+		request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, client.authenticationCookie))
+	}
 
 	httpClient := &http.Client{}
 	response, err := httpClient.Do(request)

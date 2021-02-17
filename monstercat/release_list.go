@@ -28,7 +28,9 @@ func (client Client) ReleaseListAtPosition(limit int, offset int) (ReleaseList, 
 	if err != nil {
 		return releaseList, err
 	}
-	request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, client.authenticationCookie))
+	if client.IsLoggedIn() {
+		request.Header.Set("Cookie", fmt.Sprintf("%s=%s", authenticationCookieName, client.authenticationCookie))
+	}
 
 	httpClient := &http.Client{}
 	response, err := httpClient.Do(request)
