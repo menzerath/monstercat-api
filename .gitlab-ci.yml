@@ -2,7 +2,7 @@ stages:
   - test
 
 lint:
-  image: golang:1.15
+  image: golang:1.16
   stage: test
   before_script:
     - go get -u github.com/mgechev/revive
@@ -10,7 +10,7 @@ lint:
     - revive -formatter stylish -exclude ./vendor/... ./...
 
 test:
-  image: golang:1.15
+  image: golang:1.16
   stage: test
   script:
     - go test -mod=vendor -cover -v ./...
