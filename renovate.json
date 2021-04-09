@@ -3,11 +3,11 @@
   "extends": [
     "config:base"
   ],
-  "assignees": [
-    "marvin"
-  ],
   "commitMessagePrefix": "chore(dependency): ",
   "postUpdateOptions": [
     "gomodTidy"
+  ],
+  "reviewers": [
+    "marvin"
   ]
 }
