@@ -1,7 +1,8 @@
 # Monstercat API
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/menzerath/monstercat-api/go)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/menzerath/monstercat-api)
 [![GoDoc](https://img.shields.io/static/v1?label=godoc&message=reference&color=blue)](https://pkg.go.dev/github.com/menzerath/monstercat-api/monstercat?tab=doc)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/menzerath/monstercat-api)
 
 Go-based wrapper to access Monstercat's API for releases and tracks.
 
