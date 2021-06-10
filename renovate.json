@@ -3,11 +3,11 @@
   "extends": [
     "config:base"
   ],
-  "commitMessagePrefix": "chore(dependency): ",
+  "commitMessagePrefix": "chore: ",
   "postUpdateOptions": [
     "gomodTidy"
   ],
   "reviewers": [
-    "marvin"
+    "menzerath"
   ]
 }
