@@ -13,7 +13,7 @@ Sadly this also means that the API may break at any time.
 For additional features open an issue or feel free to create a pull request.
 
 * login with your Monstercat account
-* load and traverse release list
+* list, search and filter all releases
 * download releases as FLAC or mp3 (login required)
 
 ## Usage
@@ -34,7 +34,7 @@ import (
 
 func main() {
 	client := monstercat.NewClient()
-	releases, err := client.ReleaseList()
+	releases, err := client.Releases("mix contest", "podcast", 5, 0)
 	if err != nil {
 		fmt.Printf("error: %s", err)
 		os.Exit(1)
