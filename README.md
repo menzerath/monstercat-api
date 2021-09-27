@@ -65,11 +65,11 @@ import (
 
 func main() {
 	client := monstercat.NewClient()
-	releases, err := client.Releases("mix contest", "podcast", 5, 0)
+	catalog, err := client.GetCatalog("mix contest", "podcast", 5, 0)
 	if err != nil {
 		fmt.Printf("error: %s", err)
 		os.Exit(1)
 	}
-	fmt.Printf("releases: %+v", releases)
+	fmt.Printf("catalog: %+v", catalog)
 }
 ```
