@@ -27,7 +27,7 @@ Run a simple cli based on this project by downloading a [release](https://github
 Afterwards usage is as simple as this:
 
 ```bash
-$ ./monstercat releases --search="mix contest"
+$ ./monstercat catalog --search="mix contest"
 +------------+-------------------------------------------------+------------+---------+--------------+
 | CATALOG ID |                      TITLE                      |   ARTIST   |  TYPE   | RELEASE DATE |
 +------------+-------------------------------------------------+------------+---------+--------------+
@@ -65,7 +65,7 @@ import (
 
 func main() {
 	client := monstercat.NewClient()
-	catalog, err := client.GetCatalog("mix contest", "podcast", 5, 0)
+	catalog, err := client.Catalog("mix contest", "podcast", 5, 0)
 	if err != nil {
 		fmt.Printf("error: %s", err)
 		os.Exit(1)

@@ -3,9 +3,10 @@ package monstercat
 import "fmt"
 
 const (
-	endpointLogin           = "https://www.monstercat.com/api/sign-in"
-	endpointCatalog         = "https://www.monstercat.com/api/catalog/browse"
-	endpointReleaseDownload = "https://www.monstercat.com/api/release/%s/download?format=%s"
+	endpointLogin   = "https://www.monstercat.com/api/sign-in"
+	endpointCatalog = "https://www.monstercat.com/api/catalog/browse"
+
+	endpointDownloadRelease = "https://www.monstercat.com/api/release/%s/download?format=%s"
 
 	authenticationCookieName = "cid"
 )

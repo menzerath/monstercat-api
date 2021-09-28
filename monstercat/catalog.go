@@ -8,7 +8,7 @@ import (
 	"net/url"
 )
 
-// Catalog represents a list of releases from Monstercat API
+// Catalog represents a list of catalog items from Monstercat API
 type Catalog struct {
 	Data   []CatalogItem `json:"Data"`
 	Total  int           `json:"Total"`
@@ -16,14 +16,18 @@ type Catalog struct {
 	Offset int           `json:"Offset"`
 }
 
-// GetCatalog returns a set of releases containing the given search query, matching the given release type and being within the given range.
+// Catalog returns a set of catalog items containing the given search query, matching the given release type and being within the given range.
 // While limit and offset are required, you may leave search and releaseType empty to ignore those filters.
-func (client Client) GetCatalog(search string, releaseType string, limit int, offset int) (Catalog, error) {
+// TODO: add brands[], tags[] and genres[]
+func (client Client) Catalog(search string, releaseType string, limit int, offset int) (Catalog, error) {
 	catalog := Catalog{}
 
 	urlParameters := url.Values{}
 	urlParameters.Add("search", search)
 	urlParameters.Add("types[]", releaseType)
+	urlParameters.Add("sort", "-date")         // TODO: make configurable + add values
+	urlParameters.Add("nogold", "false")       // TODO: make configurable
+	urlParameters.Add("onlyReleased", "false") // TODO: make configurable
 	urlParameters.Add("limit", fmt.Sprintf("%d", limit))
 	urlParameters.Add("offset", fmt.Sprintf("%d", offset))
 
@@ -58,7 +62,7 @@ func (client Client) GetCatalog(search string, releaseType string, limit int, of
 	return catalog, nil
 }
 
-// HasNextPage returns true if the release list contains more pages, false otherwise.
+// HasNextPage returns true if the catalog list contains more pages, false otherwise.
 func (catalog Catalog) HasNextPage() bool {
 	return (catalog.Offset + catalog.Limit) < catalog.Total
 }
