@@ -1,4 +1,4 @@
-module github.com/menzerath/monstercat-api
+module github.com/menzerath/monstercat-api/v2
 
 go 1.17
 

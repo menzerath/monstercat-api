@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/menzerath/monstercat-api/monstercat"
+	"github.com/menzerath/monstercat-api/v2/monstercat"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )

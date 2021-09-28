@@ -50,7 +50,7 @@ $ ./monstercat catalog --search="mix contest"
 To use this project in your own work, follow these steps:
 
 ```bash
-go get -u github.com/menzerath/monstercat-api
+go get -u github.com/menzerath/monstercat-api/v2
 ```
 
 ```go
@@ -60,7 +60,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/menzerath/monstercat-api/monstercat"
+	"github.com/menzerath/monstercat-api/v2/monstercat"
 )
 
 func main() {
