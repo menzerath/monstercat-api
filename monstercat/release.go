@@ -21,21 +21,26 @@ const (
 	ReleaseTypeSingle      ReleaseType = "Single"
 )
 
-// Release represents a single release from Monstercat API
+// CatalogItem represents a single release from Monstercat API
+type CatalogItem struct {
+	ID           string    `json:"Id"`
+	Title        string    `json:"Title"`
+	ArtistsTitle string    `json:"ArtistsTitle"`
+	DebutDate    time.Time `json:"DebutDate"`
+	Release      Release   `json:"Release"`
+
+	GenrePrimary   string `json:"GenrePrimary"`
+	GenreSecondary string `json:"GenreSecondary"`
+
+	Downloadable  bool `json:"Downloadable"`
+	InEarlyAccess bool `json:"InEarlyAccess"`
+	Streamable    bool `json:"Streamable"`
+}
+
 type Release struct {
-	ID          string      `json:"id"`
-	Title       string      `json:"title"`
-	Artist      string      `json:"artistsTitle"`
-	CatalogID   string      `json:"catalogId"`
-	ReleaseDate time.Time   `json:"releaseDate"`
-	Type        ReleaseType `json:"type"`
-
-	GenrePrimary   string `json:"genrePrimary"`
-	GenreSecondary string `json:"genreSecondary"`
-
-	Downloadable  bool `json:"downloadable"`
-	InEarlyAccess bool `json:"inEarlyAccess"`
-	Streamable    bool `json:"streamable"`
+	CatalogID   string      `json:"CatalogId"`
+	ReleaseDate time.Time   `json:"ReleaseDate"`
+	Type        ReleaseType `json:"Type"`
 }
 
 // DownloadFormat describes in what kind of formats we can download a release
@@ -49,12 +54,12 @@ const (
 )
 
 // DownloadRelease downloads the given release as ZIP file in the requested format and stores it at the given path
-func (client Client) DownloadRelease(release Release, downloadFormat DownloadFormat, downloadPath string) error {
+func (client Client) DownloadRelease(catalogItem CatalogItem, downloadFormat DownloadFormat, downloadPath string) error {
 	if !client.IsLoggedIn() {
 		return ErrorClientNotLoggedIn
 	}
 
-	request, err := http.NewRequest("GET", fmt.Sprintf(endpointReleaseDownload, release.ID, downloadFormat), http.NoBody)
+	request, err := http.NewRequest("GET", fmt.Sprintf(endpointReleaseDownload, catalogItem.ID, downloadFormat), http.NoBody)
 	if err != nil {
 		return err
 	}

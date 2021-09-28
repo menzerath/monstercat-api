@@ -10,8 +10,8 @@ import (
 // Login performs a login request into your Monstercat account and stores the created authentication cookie on success for further requests
 func (client *Client) Login(email string, password string) error {
 	payload, err := json.Marshal(map[string]string{
-		"email":    email,
-		"password": password,
+		"Email":    email,
+		"Password": password,
 	})
 	if err != nil {
 		return err

@@ -9,7 +9,7 @@ import (
 func Test_DownloadRelease(t *testing.T) {
 	client := NewClient()
 
-	err := client.DownloadRelease(Release{}, ReleaseDownloadFormatMP3, "./file.zip")
+	err := client.DownloadRelease(CatalogItem{}, ReleaseDownloadFormatMP3, "./file.mp3")
 	assert.Error(t, err)
 	assert.Equal(t, ErrorClientNotLoggedIn, err)
 }
