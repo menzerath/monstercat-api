@@ -6,7 +6,7 @@ const (
 	endpointLogin   = "https://www.monstercat.com/api/sign-in"
 	endpointCatalog = "https://www.monstercat.com/api/catalog/browse"
 
-	endpointDownloadRelease = "https://www.monstercat.com/api/release/%s/download?format=%s"
+	endpointDownloadCatalogItem = "https://www.monstercat.com/api/release/%s/track-download/%s?format=%s"
 
 	authenticationCookieName = "cid"
 )

@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-// DownloadFormat describes in what kind of formats we can download a release
+// DownloadFormat describes in what kind of formats we can download a catalog item
 type DownloadFormat string
 
 // define all known download formats
@@ -17,13 +17,13 @@ const (
 	DownloadReleaseFormatWAV  = "wav"
 )
 
-// DownloadRelease downloads the given release as ZIP file in the requested format and stores it at the given path
-func (client Client) DownloadRelease(release Release, downloadFormat DownloadFormat, downloadPath string) error {
+// DownloadCatalogItem downloads the given catalog item in the requested format and stores it at the given path
+func (client Client) DownloadCatalogItem(catalogItem CatalogItem, downloadFormat DownloadFormat, downloadPath string) error {
 	if !client.IsLoggedIn() {
 		return ErrorClientNotLoggedIn
 	}
 
-	request, err := http.NewRequest("GET", fmt.Sprintf(endpointDownloadRelease, release.ID, downloadFormat), http.NoBody)
+	request, err := http.NewRequest("GET", fmt.Sprintf(endpointDownloadCatalogItem, catalogItem.Release.ID, catalogItem.ID, downloadFormat), http.NoBody)
 	if err != nil {
 		return err
 	}
@@ -58,5 +58,3 @@ func (client Client) DownloadRelease(release Release, downloadFormat DownloadFor
 
 	return nil
 }
-
-// TODO: add download function for a single catalog item
