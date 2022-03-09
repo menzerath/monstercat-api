@@ -23,8 +23,11 @@ func (client *Client) Login(email string, password string) error {
 	}
 	defer response.Body.Close()
 
-	if response.StatusCode != http.StatusNoContent {
-		return ErrorInvalidCredentials
+	if response.StatusCode != http.StatusOK {
+		if response.StatusCode == http.StatusBadRequest {
+			return ErrorInvalidCredentials
+		}
+		return fmt.Errorf("unexpected status code: %d", response.StatusCode)
 	}
 
 	for _, cookie := range response.Cookies() {

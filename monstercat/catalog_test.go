@@ -12,7 +12,7 @@ func TestBrowseCatalog_DefaultOptions(t *testing.T) {
 	catalog, err := client.BrowseCatalog()
 	assert.NoError(t, err)
 	assert.NotEmpty(t, catalog.Data)
-	assert.Len(t, catalog.Data, 10)
+	assert.LessOrEqual(t, len(catalog.Data), 10) // the api sometimes skips entries without filling them up at the end
 	assert.NotEqual(t, 0, catalog.Total)
 	assert.True(t, catalog.HasNextPage())
 }
