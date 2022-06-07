@@ -31,7 +31,7 @@ func TestBrowseCatalog_WithOption(t *testing.T) {
 func TestBrowseCatalog_WithOption_NoResults(t *testing.T) {
 	client := NewClient()
 
-	catalog, err := client.BrowseCatalog(WithSearch("xxx not found xxx"))
+	catalog, err := client.BrowseCatalog(WithSearch("xxx-not-found-xxx"))
 	assert.NoError(t, err)
 	assert.Empty(t, catalog.Data)
 	assert.Equal(t, 0, catalog.Total)
