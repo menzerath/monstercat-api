@@ -18,7 +18,7 @@ jobs:
         goos: [linux, windows, darwin]
         goarch: [amd64, arm64]
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
       - name: setup golang
         uses: actions/setup-go@v3.3.0
         with:
