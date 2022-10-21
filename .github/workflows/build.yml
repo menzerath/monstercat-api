@@ -32,7 +32,7 @@ jobs:
           GOARCH: ${{ matrix.goarch }}
         run: go build -o build/monstercat_${{ matrix.goos }}_${{ matrix.goarch }}${{ env.SUFFIX }} main.go
       - name: store binary
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3.1.1
         with:
           name: ${{ matrix.goos }}_${{ matrix.goarch }}
           path: build/
