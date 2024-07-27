@@ -1,6 +1,6 @@
 # Monstercat API
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/menzerath/monstercat-api/go)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/menzerath/monstercat-api/build.yml?branch=main)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/menzerath/monstercat-api)
 [![GoDoc](https://img.shields.io/static/v1?label=godoc&message=reference&color=blue)](https://pkg.go.dev/github.com/menzerath/monstercat-api/v2/monstercat)
 
